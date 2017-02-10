@@ -31,7 +31,7 @@ ADD bin/* ${ROOTFS}/tmp/
 # cython package is in backports on Wheezy
 # tcl/tk latest is v. 8.5 in Wheezy
 # cleanup apt
-# use modified arm-linux-gnueabihf-* if running on wheezy
+# use modified arm-linux-gnueabihf-* and abi hacks (account for gcc=4.9, libstdc++=4.7) if running on wheezy
 # else use native arm-linux-gnueabihf-* 
 # cleanup
 # update ccache symlinks
@@ -55,6 +55,7 @@ RUN echo "nameserver 8.8.8.8\nnameserver 8.8.4.4" \
     (rm -f /var/lib/apt/lists/* ${ROOTFS}/var/lib/apt/lists/* || true) && \
     (test $ARCH = armhf && test $SUITE = wheezy \
         && cp ${ROOTFS}/tmp/arm-* ${ROOTFS}/usr/bin/ \
+        && cp ${ROOTFS}/tmp/wheezy_hacks.o ${ROOTFS}/usr/lib/ \
         || true) && \
     (test $ARCH = armhf && test $SUITE != wheezy \
         && proot-helper sh -c '\

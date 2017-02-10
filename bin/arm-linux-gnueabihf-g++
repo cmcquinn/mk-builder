@@ -1,8 +1,15 @@
 #!/bin/sh
+
+if [ "$*" != "${*#*-lstdc++}" ] ; then
+  HACK=/usr/lib/wheezy_hacks.o
+else
+  HACK=""
+fi
+
 exec /host-rootfs/usr/bin/arm-linux-gnueabihf-g++-4.9 \
-	-I/usr/include \
-	-I/usr/include/c++/4.7 \
 	-I/usr/include/c++/4.7/arm-linux-gnueabihf \
+	-I/usr/include/c++/4.7 \
+	-I/usr/include \
 	-fext-numeric-literals \
 	-Wl,-rpath-link=/usr/lib/gcc/arm-linux-gnueabihf/4.7 \
 	-Wl,-rpath-link=/usr/lib/arm-linux-gnueabihf \
@@ -14,4 +21,5 @@ exec /host-rootfs/usr/bin/arm-linux-gnueabihf-g++-4.9 \
 	-L/lib/arm-linux-gnueabihf \
 	-L/usr/lib \
 	-L/lib \
-	"$@"
+	"$@" \
+	$HACK
