@@ -55,7 +55,7 @@ RUN echo "nameserver 8.8.8.8\nnameserver 8.8.4.4" \
     (rm -f /var/lib/apt/lists/* ${ROOTFS}/var/lib/apt/lists/* || true) && \
     (test $ARCH = armhf && test $SUITE = wheezy \
         && cp ${ROOTFS}/tmp/arm-* ${ROOTFS}/usr/bin/ \
-        && cp ${ROOTFS}/tmp/wheezy_hacks.o ${ROOTFS}/usr/lib/ \
+        && gcc -c -o ${ROOTFS}/usr/lib/wheezy_hacks.o ${ROOTFS}/tmp/wheezy_hacks.c \
         || true) && \
     (test $ARCH = armhf && test $SUITE != wheezy \
         && proot-helper sh -c '\
